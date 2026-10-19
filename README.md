@@ -15,7 +15,7 @@ Large model files are kept in `/tmp` to avoid filling Kaggle’s limited `/kaggl
 - Wan2GP + Gradio interface
 - Support for MiniMax H3 Turbo LoRA
 - GPU / disk checks
-- Automatic downloads from Hugging Face
+- Automatic downloads from Hugging Face (model and encoder; the Turbo LoRA is fetched from the Wan2GP UI)
 
 ## Requirements
 
@@ -31,10 +31,12 @@ Large model files are kept in `/tmp` to avoid filling Kaggle’s limited `/kaggl
 1. Open `minimax-h3-wan2gp-kaggle.ipynb`
 2. Set Accelerator → T4
 3. Turn **Internet** On
-4. Run all cells from top to bottom
-5. Keep the last cell running and open the Gradio URL it prints
+4. Run the cells in order. The last cell launches Wan2GP and keeps running.
+5. Open the Gradio URL it prints
 
 ## Model Files
+
+Enter these paths in Wan2GP's model settings if the interface doesn't pick them up automatically.
 
 | Component              | Path |
 |------------------------|------|
@@ -50,13 +52,15 @@ Source model: [DeepBeepMeep/MiniMax-H3](https://huggingface.co/DeepBeepMeep/Mini
 Turbo EMA ckpt850 4 steps
 ```
 
+No manual download needed. Select it in the LoRA selector inside Wan2GP and it downloads automatically on first use.
+
 ## Suggested First Test Settings
 
 ```text
 Model:          MiniMax H3 / FL2VA Pruned 20B
 Resolution:     480p
 Duration:       ~5 seconds (124 frames)
-Steps:          6
+Steps:          4
 LoRA strength:  1.0
 Scheduler:      simple (if available)
 ```
@@ -66,6 +70,7 @@ Keep other acceleration methods **off** for the first run.
 ## Storage Notes
 
 - Large files go to `/tmp/minimax_h3/`
+- `/tmp` is wiped when the Kaggle session restarts, so re-run the download cells (sections 5 and 6) next time
 - Generated videos are saved to `/kaggle/working/Wan2GP/outputs/`
 - The notebook does **not** contain model weights — they are downloaded at runtime.
 
